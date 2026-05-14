@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root { --radius: 0.75rem; }
+  * { box-sizing: border-box; }
+  body { background: #1a0640; color: #0f0520; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; }
+}
+
+@layer utilities {
+  .mystic-gradient { background: linear-gradient(135deg, #4c1d95 0%, #7c3aed 50%, #d97706 100%); }
+  .gold-text {
+    background: linear-gradient(90deg, #f59e0b, #fbbf24, #d97706);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .font-display { font-family: 'Playfair Display', Georgia, serif; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn { animation: fadeIn 0.3s ease-out forwards; }
