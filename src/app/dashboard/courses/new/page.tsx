@@ -23,7 +23,12 @@ export default function NewCoursePage() {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const fd = new FormData(e.currentTarget)
-    startTransition(() => createCourse(fd))
+    startTransition(async () => {
+      const result = await createCourse(fd)
+      if (result?.error) {
+        alert(result.error)
+      }
+    })
   }
 
   return (

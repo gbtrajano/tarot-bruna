@@ -211,8 +211,8 @@ export function CourseEditor({ course, modules: initModules }: { course: any; mo
                     {(mod.lessons || []).map((lesson: any, lIdx: number) => (
                       <LessonRow key={lesson.id} lesson={lesson} index={lIdx} courseId={course.id}
                         onDelete={() => removeLesson(lesson.id, mod.id)}
-                        onVideo={file => handleVideo(file, lesson.id, mod.id)}
-                        onSave={fields => { setModules(prev => prev.map(m => m.id === mod.id ? { ...m, lessons: m.lessons?.map((l: any) => l.id === lesson.id ? { ...l, ...fields } : l) } : m)); updateLesson(lesson.id, course.id, fields) }} />
+                        onVideo={(file: File) => handleVideo(file, lesson.id, mod.id)}
+                        onSave={(fields: any) => { setModules(prev => prev.map(m => m.id === mod.id ? { ...m, lessons: m.lessons?.map((l: any) => l.id === lesson.id ? { ...l, ...fields } : l) } : m)); updateLesson(lesson.id, course.id, fields) }} />
                     ))}
                     <div className="px-5 py-2.5">
                       <button onClick={() => addLesson(mod.id)} className="flex items-center gap-1.5 text-xs text-purple-600 hover:text-purple-700 font-medium">
