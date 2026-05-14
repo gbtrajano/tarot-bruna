@@ -17,8 +17,8 @@ export default async function CatalogPage() {
             <Sparkles size={12} /> Desperte seu potencial intuitivo
           </div>
           <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-4 leading-tight">
-            Aprenda Tarot com os{' '}
-            <span className="gold-text">melhores instrutores</span>
+            Aprenda Tarot com a{' '}
+            <span className="gold-text">melhor instrutora</span>
           </h1>
           <p className="text-purple-200 text-lg mb-8">Cursos completos do básico ao avançado. Do Tarot tradicional ao terapêutico.</p>
           <div className="relative max-w-md mx-auto">
