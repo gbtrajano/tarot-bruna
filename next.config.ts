@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: '*.supabase.in' },
     ],
   },
+  serverActions: {
+    bodySizeLimit: '2GB',
+  },
 }
 
 export default nextConfig

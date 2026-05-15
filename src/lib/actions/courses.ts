@@ -137,11 +137,38 @@ export async function uploadLessonVideo(lessonId: string, courseId: string, file
   return { url: publicUrl }
 }
 
+export async function uploadLessonMaterial(lessonId: string, courseId: string, file: File) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { error: 'Não autenticado' }
+  const ext = file.name.split('.').pop()
+  const name = file.name.replace(/\.[^/.]+$/, '')
+  const path = `${user.id}/${courseId}/${lessonId}/${Date.now()}-${name}.${ext}`
+  const { error: up } = await supabase.storage.from('lesson-materials').upload(path, file, { upsert: true })
+  if (up) return { error: up.message }
+  const { data: { publicUrl } } = supabase.storage.from('lesson-materials').getPublicUrl(path)
+  const newMaterial = JSON.stringify({ url: publicUrl, name: file.name, type: ext })
+  const { data: lesson } = await supabase.from('lessons').select('material_url').eq('id', lessonId).single()
+  const existing = lesson?.material_url ? JSON.parse(lesson.material_url) : []
+  const updated = Array.isArray(existing) ? [...existing, newMaterial] : [newMaterial]
+  await supabase.from('lessons').update({ material_url: JSON.stringify(updated) }).eq('id', lessonId)
+  revalidatePath('/dashboard/courses')
+  return { url: publicUrl, name: file.name }
+}
+
 export async function deleteLesson(lessonId: string, courseId: string) {
   const supabase = await createClient()
   const { error } = await supabase.from('lessons').delete().eq('id', lessonId)
   if (error) return { error: error.message }
   await supabase.rpc('update_course_totals', { p_course_id: courseId })
+  revalidatePath('/dashboard/courses')
+  return { success: true }
+}
+
+export async function deleteCourse(courseId: string) {
+  const supabase = await createClient()
+  const { error } = await supabase.from('courses').delete().eq('id', courseId)
+  if (error) return { error: error.message }
   revalidatePath('/dashboard/courses')
   return { success: true }
 }

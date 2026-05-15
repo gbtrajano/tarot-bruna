@@ -1,7 +1,8 @@
 'use client'
 import React, { useState, useTransition } from 'react'
-import { updateCourse, togglePublish, uploadCourseCover, createModule, deleteModule, createLesson, updateLesson, deleteLesson, uploadLessonVideo } from '../../lib/actions/courses'
-import { ArrowLeft, BookOpen, Layers, Settings, Globe, Lock, Save, Upload, Plus, Trash2, ChevronDown, ChevronUp, Video, ExternalLink } from 'lucide-react'
+import { updateCourse, togglePublish, uploadCourseCover, createModule, deleteModule, createLesson, updateLesson, deleteLesson, uploadLessonMaterial, deleteCourse } from '../../lib/actions/courses'
+import { createClient } from '../../lib/supabase/client'
+import { ArrowLeft, BookOpen, Layers, Settings, Globe, Lock, Save, Upload, Plus, Trash2, ChevronDown, ChevronUp, Video, ExternalLink, FileText } from 'lucide-react'
 import Link from 'next/link'
 import { cn, formatCurrency } from '../../lib/utils'
 
@@ -25,8 +26,9 @@ export function CourseEditor({ course, modules: initModules }: { course: any; mo
   const [saving, setSaving] = useState(false)
   const [msg, setMsg] = useState('')
   const [isPub, startPub] = useTransition()
+  const supabase = createClient()
 
-  const showMsg = (m: string) => { setMsg(m); setTimeout(() => setMsg(''), 2500) }
+  const showMsg = (m: string) => { setMsg(m); setTimeout(() => setMsg(''), 4000) }
 
   async function handleCover(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]; if (!file) return
@@ -47,6 +49,12 @@ export function CourseEditor({ course, modules: initModules }: { course: any; mo
       await togglePublish(course.id, !course.is_published)
       showMsg(course.is_published ? 'Despublicado' : 'Publicado!')
     })
+  }
+
+  async function handleDeleteCourse() {
+    if (!confirm('Tem certeza que deseja excluir este curso? Esta ação não pode ser desfeita.')) return
+    await deleteCourse(course.id)
+    window.location.href = '/dashboard/courses'
   }
 
   async function addModule() {
@@ -73,10 +81,32 @@ export function CourseEditor({ course, modules: initModules }: { course: any; mo
   }
 
   async function handleVideo(file: File, lessonId: string, moduleId: string) {
-    const r = await uploadLessonVideo(lessonId, course.id, file)
-    if (r?.url) {
-      setModules(prev => prev.map(m => m.id === moduleId ? { ...m, lessons: m.lessons?.map((l: any) => l.id === lessonId ? { ...l, video_url: r.url } : l) } : m))
+    try {
+      // Upload directly from the browser to Supabase Storage (bypasses Next.js body limit)
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) { showMsg('Erro: não autenticado'); return }
+      const ext = file.name.split('.').pop()
+      const path = `${user.id}/${course.id}/${lessonId}/video.${ext}`
+      const { error: upErr } = await supabase.storage.from('lesson-videos').upload(path, file, { upsert: true })
+      if (upErr) { showMsg('Erro: ' + upErr.message); return }
+      const { data: { publicUrl } } = supabase.storage.from('lesson-videos').getPublicUrl(path)
+      // Save URL to DB via server action
+      await updateLesson(lessonId, course.id, { video_url: publicUrl })
+      setModules(prev => prev.map(m => m.id === moduleId ? { ...m, lessons: m.lessons?.map((l: any) => l.id === lessonId ? { ...l, video_url: publicUrl } : l) } : m))
       showMsg('Vídeo enviado!')
+    } catch (e: any) {
+      showMsg('Erro ao enviar vídeo: ' + (e?.message ?? e))
+    }
+  }
+
+  async function handleMaterial(file: File, lessonId: string, moduleId: string) {
+    const r = await uploadLessonMaterial(lessonId, course.id, file)
+    if (r?.url) {
+      const { data } = await supabase.from('lessons').select('material_url').eq('id', lessonId).single()
+      setModules(prev => prev.map(m => m.id === moduleId ? { ...m, lessons: m.lessons?.map((l: any) => l.id === lessonId ? { ...l, material_url: data?.material_url } : l) } : m))
+      showMsg('Material anexado!')
+    } else if (r?.error) {
+      showMsg('Erro: ' + r.error)
     }
   }
 
@@ -212,6 +242,7 @@ export function CourseEditor({ course, modules: initModules }: { course: any; mo
                       <LessonRow key={lesson.id} lesson={lesson} index={lIdx} courseId={course.id}
                         onDelete={() => removeLesson(lesson.id, mod.id)}
                         onVideo={(file: File) => handleVideo(file, lesson.id, mod.id)}
+                        onMaterial={(file: File) => handleMaterial(file, lesson.id, mod.id)}
                         onSave={(fields: any) => { setModules(prev => prev.map(m => m.id === mod.id ? { ...m, lessons: m.lessons?.map((l: any) => l.id === lesson.id ? { ...l, ...fields } : l) } : m)); updateLesson(lesson.id, course.id, fields) }} />
                     ))}
                     <div className="px-5 py-2.5">
@@ -248,18 +279,28 @@ export function CourseEditor({ course, modules: initModules }: { course: any; mo
             <p className="text-2xl font-bold">{course.price === 0 ? <span className="text-emerald-600">Gratuito</span> : formatCurrency(course.price)}</p>
             <p className="text-xs text-gray-400 mt-1">Para alterar, vá em Informações → campo Preço</p>
           </div>
+          <div className="rounded-xl border border-red-200 bg-red-50 p-5 shadow-sm">
+            <h2 className="font-semibold text-sm text-red-700 mb-3">Zona de perigo</h2>
+            <p className="text-xs text-red-600 mb-3">Excluir este curso removerá todos os módulos, aulas e dados associados.</p>
+            <button onClick={handleDeleteCourse} className="px-4 py-2 rounded-lg text-sm font-medium bg-red-600 text-white hover:bg-red-700 transition-colors">
+              Excluir curso
+            </button>
+          </div>
         </div>
       )}
     </div>
   )
 }
 
-function LessonRow({ lesson, index, courseId, onDelete, onVideo, onSave }: any) {
+function LessonRow({ lesson, index, courseId, onDelete, onVideo, onSave, onMaterial }: any) {
   const [editing, setEditing] = useState(false)
   const [title, setTitle] = useState(lesson.title)
   const [desc, setDesc] = useState(lesson.description || '')
   const [preview, setPreview] = useState(lesson.is_preview)
   const [uploading, setUploading] = useState(false)
+  const [uploadingMat, setUploadingMat] = useState(false)
+
+  const materials = lesson.material_url ? (() => { try { return JSON.parse(lesson.material_url) } catch { return [] } })() : []
 
   return (
     <div className="border-t first:border-t-0 px-5 py-3 flex items-start gap-3">
@@ -268,7 +309,7 @@ function LessonRow({ lesson, index, courseId, onDelete, onVideo, onSave }: any) 
       <div className="flex-1 min-w-0">
         {editing ? (
           <div className="space-y-2">
-            <input value={title} onChange={e => setTitle(e.target.value)} className="w-full text-sm border rounded-lg px-2 py-1 focus:outline-none focus:ring-1 focus:ring-mystic-400" autoFocus />
+            <input value={title} onChange={e => setTitle(e.target.value)} className="w-full text-sm border rounded-lg px-2 py-1 focus:outline-none focus:ring-1 focus:ring-mystic-400" autoFocus placeholder="Título da aula" />
             <input value={desc} onChange={e => setDesc(e.target.value)} className="w-full text-xs border rounded-lg px-2 py-1 focus:outline-none focus:ring-1 focus:ring-mystic-400 text-gray-500" placeholder="Descrição breve (opcional)" />
             <label className="flex items-center gap-1.5 text-xs text-gray-500 cursor-pointer">
               <input type="checkbox" checked={preview} onChange={e => setPreview(e.target.checked)} className="rounded" />
@@ -285,6 +326,18 @@ function LessonRow({ lesson, index, courseId, onDelete, onVideo, onSave }: any) 
             {lesson.description && <p className="text-xs text-gray-400 truncate">{lesson.description}</p>}
           </button>
         )}
+        {materials.length > 0 && (
+          <div className="flex flex-wrap gap-1 mt-1">
+            {materials.map((m: any, i: number) => {
+              const mat = typeof m === 'string' ? JSON.parse(m) : m
+              return (
+                <a key={i} href={mat.url} target="_blank" rel="noopener noreferrer" className="text-[10px] px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-700 hover:bg-amber-200 flex items-center gap-1">
+                  <FileText size={9} /> {mat.name || 'Material'}
+                </a>
+              )
+            })}
+          </div>
+        )}
       </div>
       <div className="flex items-center gap-2 shrink-0">
         {preview && <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700">PREVIEW</span>}
@@ -292,11 +345,17 @@ function LessonRow({ lesson, index, courseId, onDelete, onVideo, onSave }: any) 
           ? <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-700">Vídeo ✓</span>
           : <label className={uploading ? 'opacity-50' : 'cursor-pointer'}>
             <span className="flex items-center gap-1 text-xs text-gray-400 hover:text-mystic-600 transition-colors px-2 py-1 rounded hover:bg-mystic-50">
-              <Upload size={11} />{uploading ? 'Enviando...' : 'Vídeo'}
+              <Upload size={11} />{uploading ? '...' : 'Vídeo'}
             </span>
             <input type="file" accept="video/*" className="sr-only" disabled={uploading} onChange={async e => { const f = e.target.files?.[0]; if (!f) return; setUploading(true); await onVideo(f); setUploading(false) }} />
           </label>
         }
+        <label className={uploadingMat ? 'opacity-50' : 'cursor-pointer'}>
+          <span className="flex items-center gap-1 text-xs text-gray-400 hover:text-mystic-600 transition-colors px-2 py-1 rounded hover:bg-mystic-50">
+            <FileText size={11} />{uploadingMat ? '...' : 'Material'}
+          </span>
+          <input type="file" className="sr-only" disabled={uploadingMat} onChange={async e => { const f = e.target.files?.[0]; if (!f) return; setUploadingMat(true); await onMaterial(f); setUploadingMat(false) }} />
+        </label>
         <button onClick={onDelete} className="p-1 rounded hover:bg-red-50 hover:text-red-500 transition-colors text-gray-400"><Trash2 size={12} /></button>
       </div>
     </div>
