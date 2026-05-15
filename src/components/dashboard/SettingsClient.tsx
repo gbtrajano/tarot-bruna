@@ -27,7 +27,7 @@ export function SettingsClient({ profile }: { profile: any }) {
     })
   }
 
-  const inp = 'w-full h-11 rounded-xl border border-gray-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white'
+  const inp = 'w-full h-11 rounded-xl border border-gray-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-mystic-400 bg-white'
 
   return (
     <div className="space-y-6 animate-fadeIn max-w-3xl">
@@ -41,7 +41,7 @@ export function SettingsClient({ profile }: { profile: any }) {
         {tabs.map(t => (
           <button key={t.id} onClick={() => setTab(t.id)}
             className={cn('flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors',
-              tab === t.id ? 'border-purple-600 text-purple-700' : 'border-transparent text-gray-500 hover:text-gray-700')}>
+              tab === t.id ? 'border-mystic-600 text-mystic-700' : 'border-transparent text-gray-500 hover:text-gray-700')}>
             <t.icon size={14} />{t.label}
           </button>
         ))}
@@ -56,7 +56,7 @@ export function SettingsClient({ profile }: { profile: any }) {
             <div>
               <label className="text-sm font-medium text-gray-700 block mb-1.5">Bio / Apresentação</label>
               <textarea name="bio" defaultValue={profile?.bio || ''} placeholder="Conte sobre você e sua experiência com Tarot..."
-                className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white min-h-[120px] resize-none" />
+                className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-mystic-400 bg-white min-h-[120px] resize-none" />
             </div>
             <div>
               <label className="text-sm font-medium text-gray-700 block mb-1.5">Website ou rede social</label>
@@ -76,17 +76,17 @@ export function SettingsClient({ profile }: { profile: any }) {
                 { value: 'stripe', label: 'Stripe', desc: 'Cartão internacional.', emoji: '⚡', badge: 'Internacional' },
               ].map(gw => (
                 <label key={gw.value} className={cn('flex flex-col gap-2 p-4 rounded-xl border-2 cursor-pointer transition-all',
-                  gateway === gw.value ? 'border-purple-500 bg-purple-50' : 'border-gray-200 hover:border-gray-300')}>
+                  gateway === gw.value ? 'border-mystic-500 bg-mystic-50' : 'border-gray-200 hover:border-gray-300')}>
                   <input type="radio" name="payment_gateway" value={gw.value} className="sr-only" checked={gateway === gw.value} onChange={() => setGateway(gw.value)} />
                   <div className="flex items-center justify-between">
                     <span className="text-2xl">{gw.emoji}</span>
-                    {gateway === gw.value && <CheckCircle size={15} className="text-purple-600" />}
+                    {gateway === gw.value && <CheckCircle size={15} className="text-mystic-600" />}
                   </div>
                   <div>
                     <p className="text-sm font-semibold">{gw.label}</p>
                     <p className="text-xs text-gray-500 mt-0.5">{gw.desc}</p>
                   </div>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-100 text-purple-700 self-start">{gw.badge}</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-mystic-100 text-mystic-700 self-start">{gw.badge}</span>
                 </label>
               ))}
             </div>

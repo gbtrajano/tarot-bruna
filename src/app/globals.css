@@ -6,12 +6,12 @@
 @layer base {
   :root { --radius: 0.75rem; }
   * { box-sizing: border-box; }
-  body { background: #1a0640; color: #0f0520; -webkit-font-smoothing: antialiased; }
+  body { background: #2d0a0a; color: #0f0520; -webkit-font-smoothing: antialiased; }
   h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; }
 }
 
 @layer utilities {
-  .mystic-gradient { background: linear-gradient(135deg, #4c1d95 0%, #7c3aed 50%, #d97706 100%); }
+  .mystic-gradient { background: linear-gradient(135deg, #5c1a1a 0%, #8b4040 50%, #d97706 100%); }
   .gold-text {
     background: linear-gradient(90deg, #f59e0b, #fbbf24, #d97706);
     -webkit-background-clip: text;

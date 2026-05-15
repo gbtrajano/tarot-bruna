@@ -14,7 +14,7 @@ const CATS = [
   { value: 'espiritualidade', label: 'Espiritualidade' },
 ]
 
-const inp = 'w-full h-11 rounded-xl border border-gray-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white'
+const inp = 'w-full h-11 rounded-xl border border-gray-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-mystic-400 bg-white'
 
 export default function NewCoursePage() {
   const [pending, startTransition] = useTransition()
@@ -50,7 +50,7 @@ export default function NewCoursePage() {
           <div>
             <label className="text-sm font-medium text-gray-700 block mb-1.5">Descrição curta *</label>
             <textarea name="short_description" required placeholder="Uma frase que resume o curso..."
-              className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white min-h-[80px] resize-none" />
+              className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-mystic-400 bg-white min-h-[80px] resize-none" />
           </div>
           <div>
             <label className="text-sm font-medium text-gray-700 block mb-1.5">Categoria</label>
@@ -64,7 +64,7 @@ export default function NewCoursePage() {
             <div className="grid grid-cols-2 gap-3 mb-3">
               {[{ val: false, label: '💳 Curso pago' }, { val: true, label: '🎁 Gratuito' }].map(opt => (
                 <button key={String(opt.val)} type="button" onClick={() => setIsFree(opt.val)}
-                  className={`p-3 rounded-xl border-2 text-sm font-semibold transition-all text-left ${isFree === opt.val ? 'border-purple-500 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-gray-300'}`}>
+                  className={`p-3 rounded-xl border-2 text-sm font-semibold transition-all text-left ${isFree === opt.val ? 'border-mystic-500 bg-mystic-50 text-mystic-700' : 'border-gray-200 hover:border-gray-300'}`}>
                   {opt.label}
                 </button>
               ))}
@@ -74,9 +74,9 @@ export default function NewCoursePage() {
           </div>
         </div>
 
-        <div className="flex items-start gap-3 p-4 rounded-xl bg-purple-50 border border-purple-100">
-          <Sparkles size={15} className="text-purple-500 mt-0.5 shrink-0" />
-          <p className="text-sm text-purple-700">Após criar, você adiciona módulos, aulas, vídeos e a capa do curso.</p>
+        <div className="flex items-start gap-3 p-4 rounded-xl bg-mystic-50 border border-mystic-100">
+          <Sparkles size={15} className="text-mystic-500 mt-0.5 shrink-0" />
+          <p className="text-sm text-mystic-700">Após criar, você adiciona módulos, aulas, vídeos e a capa do curso.</p>
         </div>
 
         <div className="flex gap-3">

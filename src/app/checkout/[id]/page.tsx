@@ -14,7 +14,7 @@ export default async function CheckoutPage({ params }: { params: Promise<{ id: s
   const isFree = course.price === 0
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #1a0640, #2e1065, #1a0640)' }}>
+    <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #2d0a0a, #4a1515, #2d0a0a)' }}>
       <StudentHeader />
       <div className="pt-20 pb-16 px-4">
         <div className="max-w-5xl mx-auto">
@@ -34,20 +34,20 @@ export default async function CheckoutPage({ params }: { params: Promise<{ id: s
               <div className="rounded-2xl overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}>
                 {course.cover_image_url
                   ? <img src={course.cover_image_url} alt={course.title} className="w-full aspect-video object-cover" />
-                  : <div className="aspect-video bg-purple-900 flex items-center justify-center text-5xl">🔮</div>
+                  : <div className="aspect-video bg-mystic-900 flex items-center justify-center text-5xl">🔮</div>
                 }
                 <div className="p-5 space-y-4">
                   <div>
-                    <p className="text-xs text-purple-400 uppercase tracking-wider mb-1">Você está adquirindo</p>
+                    <p className="text-xs text-mystic-400 uppercase tracking-wider mb-1">Você está adquirindo</p>
                     <h3 className="text-white font-semibold">{course.title}</h3>
-                    {course.short_description && <p className="text-purple-300 text-xs mt-1 line-clamp-2">{course.short_description}</p>}
+                    {course.short_description && <p className="text-mystic-300 text-xs mt-1 line-clamp-2">{course.short_description}</p>}
                   </div>
-                  <div className="flex items-center gap-4 text-xs text-purple-400">
+                  <div className="flex items-center gap-4 text-xs text-mystic-400">
                     <span className="flex items-center gap-1"><BookOpen size={11} />{totalLessons} aulas</span>
                     <span className="flex items-center gap-1"><Clock size={11} />Acesso vitalício</span>
                   </div>
                   <div className="border-t border-white/10 pt-4">
-                    <div className="flex justify-between text-sm text-purple-300 mb-1">
+                    <div className="flex justify-between text-sm text-mystic-300 mb-1">
                       <span>Subtotal</span><span>{isFree ? 'R$ 0,00' : formatCurrency(course.price)}</span>
                     </div>
                     <div className="flex justify-between font-bold text-white text-base">
@@ -55,7 +55,7 @@ export default async function CheckoutPage({ params }: { params: Promise<{ id: s
                       <span>{isFree ? <span className="text-emerald-400">Gratuito</span> : formatCurrency(course.price)}</span>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-purple-400">
+                  <div className="flex items-center gap-2 text-xs text-mystic-400">
                     <ShieldCheck size={11} className="text-emerald-500" /> Dados protegidos com SSL
                   </div>
                 </div>

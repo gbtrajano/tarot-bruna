@@ -9,7 +9,7 @@ export default async function DashboardPage() {
   const [stats, courses] = await Promise.all([getDashboardStats(), getSellerCourses()])
 
   const cards = [
-    { label: 'Matrículas', value: String(stats?.total_enrollments ?? 0), sub: `+${stats?.new_enrollments_this_month ?? 0} este mês`, icon: GraduationCap, color: 'bg-purple-100 text-purple-700' },
+    { label: 'Matrículas', value: String(stats?.total_enrollments ?? 0), sub: `+${stats?.new_enrollments_this_month ?? 0} este mês`, icon: GraduationCap, color: 'bg-mystic-100 text-mystic-700' },
     { label: 'Alunos', value: String(stats?.total_students ?? 0), sub: 'alunos únicos', icon: Users, color: 'bg-blue-100 text-blue-700' },
     { label: 'Receita total', value: formatCurrency(stats?.total_revenue ?? 0), sub: `${formatCurrency(stats?.revenue_this_month ?? 0)} este mês`, icon: DollarSign, color: 'bg-emerald-100 text-emerald-700' },
     { label: 'Cursos', value: `${stats?.total_published ?? 0}/${stats?.total_courses ?? 0}`, sub: 'publicados / total', icon: BookOpen, color: 'bg-amber-100 text-amber-700' },
@@ -49,7 +49,7 @@ export default async function DashboardPage() {
             ? <p className="px-5 py-8 text-sm text-gray-400 text-center">Nenhuma venda ainda.</p>
             : (stats?.recent_orders || []).map((o: any) => (
               <div key={o.id} className="flex items-center gap-3 px-5 py-3 border-b last:border-0">
-                <div className="w-7 h-7 rounded-full bg-purple-100 flex items-center justify-center text-xs font-semibold text-purple-700 shrink-0">
+                <div className="w-7 h-7 rounded-full bg-mystic-100 flex items-center justify-center text-xs font-semibold text-mystic-700 shrink-0">
                   {o.student?.full_name?.[0] || '?'}
                 </div>
                 <div className="flex-1 min-w-0">
@@ -69,14 +69,14 @@ export default async function DashboardPage() {
       <div className="rounded-xl border bg-white shadow-sm overflow-hidden">
         <div className="flex items-center justify-between px-5 py-4 border-b">
           <h2 className="font-semibold text-sm">Seus Cursos</h2>
-          <Link href="/dashboard/courses" className="text-xs text-purple-600 hover:underline">Ver todos →</Link>
+          <Link href="/dashboard/courses" className="text-xs text-mystic-600 hover:underline">Ver todos →</Link>
         </div>
         {courses.length === 0
           ? <div className="py-10 text-center"><p className="text-sm text-gray-400 mb-3">Nenhum curso criado.</p>
-            <Link href="/dashboard/courses/new" className="text-sm text-purple-600 hover:underline">Criar primeiro curso</Link></div>
+            <Link href="/dashboard/courses/new" className="text-sm text-mystic-600 hover:underline">Criar primeiro curso</Link></div>
           : courses.slice(0, 5).map((c: any) => (
             <Link key={c.id} href={`/dashboard/courses/edit?id=${c.id}`} className="flex items-center gap-4 px-5 py-3 border-b last:border-0 hover:bg-gray-50 transition-colors">
-              <div className="w-10 h-10 rounded-lg bg-purple-100 overflow-hidden shrink-0">
+              <div className="w-10 h-10 rounded-lg bg-mystic-100 overflow-hidden shrink-0">
                 {c.cover_image_url ? <img src={c.cover_image_url} alt={c.title} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-lg">🔮</div>}
               </div>
               <div className="flex-1 min-w-0">

@@ -29,8 +29,8 @@ export default async function CoursesPage() {
       ) : (
         <div className="space-y-3">
           {courses.map((c: any) => (
-            <div key={c.id} className="flex items-center gap-4 p-4 rounded-xl border bg-white hover:border-purple-200 transition-colors group shadow-sm">
-              <div className="w-16 h-12 rounded-lg overflow-hidden bg-purple-100 shrink-0">
+            <div key={c.id} className="flex items-center gap-4 p-4 rounded-xl border bg-white hover:border-mystic-200 transition-colors group shadow-sm">
+              <div className="w-16 h-12 rounded-lg overflow-hidden bg-mystic-100 shrink-0">
                 {c.cover_image_url ? <img src={c.cover_image_url} alt={c.title} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-xl">🔮</div>}
               </div>
               <div className="flex-1 min-w-0">
@@ -49,7 +49,7 @@ export default async function CoursesPage() {
                     <Eye size={12} /> Ver
                   </Link>
                 )}
-                <Link href={`/dashboard/courses/edit?id=${c.id}`} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-50 text-purple-700 text-xs font-medium hover:bg-purple-100">
+                <Link href={`/dashboard/courses/edit?id=${c.id}`} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-mystic-50 text-mystic-700 text-xs font-medium hover:bg-mystic-100">
                   <Pencil size={12} /> Editar
                 </Link>
               </div>

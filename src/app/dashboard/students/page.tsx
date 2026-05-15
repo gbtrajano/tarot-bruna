@@ -33,7 +33,7 @@ export default async function StudentsPage() {
 
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
         {[
-          { label: 'Alunos únicos', value: uniqueStudents, icon: Users, color: 'bg-purple-100 text-purple-700' },
+          { label: 'Alunos únicos', value: uniqueStudents, icon: Users, color: 'bg-mystic-100 text-mystic-700' },
           { label: 'Matrículas totais', value: enrollments.length, icon: GraduationCap, color: 'bg-blue-100 text-blue-700' },
           { label: 'Cursos', value: courses.length, icon: null, emoji: '📚', color: 'bg-emerald-100 text-emerald-700' },
         ].map(card => (
@@ -73,7 +73,7 @@ export default async function StudentsPage() {
                   <tr key={e.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-sm font-semibold text-purple-700 shrink-0">
+                        <div className="w-8 h-8 rounded-full bg-mystic-100 flex items-center justify-center text-sm font-semibold text-mystic-700 shrink-0">
                           {e.student?.full_name?.[0]?.toUpperCase() || '?'}
                         </div>
                         <div>
@@ -86,7 +86,7 @@ export default async function StudentsPage() {
                     <td className="px-6 py-3">
                       <div className="flex items-center gap-2">
                         <div className="w-20 h-1.5 rounded-full bg-gray-100 overflow-hidden">
-                          <div className="h-full rounded-full bg-purple-500" style={{ width: `${e.progress_percent || 0}%` }} />
+                          <div className="h-full rounded-full bg-mystic-500" style={{ width: `${e.progress_percent || 0}%` }} />
                         </div>
                         <span className="text-xs text-gray-400">{Math.round(e.progress_percent || 0)}%</span>
                       </div>

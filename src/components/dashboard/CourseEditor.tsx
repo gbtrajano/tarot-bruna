@@ -80,7 +80,7 @@ export function CourseEditor({ course, modules: initModules }: { course: any; mo
     }
   }
 
-  const inp = 'w-full h-10 rounded-lg border border-gray-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white'
+  const inp = 'w-full h-10 rounded-lg border border-gray-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-mystic-400 bg-white'
   const tabs: { id: Tab; label: string; icon: React.ElementType }[] = [
     { id: 'info', label: 'Informações', icon: BookOpen },
     { id: 'modules', label: 'Módulos & Aulas', icon: Layers },
@@ -122,7 +122,7 @@ export function CourseEditor({ course, modules: initModules }: { course: any; mo
         {tabs.map(t => (
           <button key={t.id} onClick={() => setTab(t.id)}
             className={cn('flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors',
-              tab === t.id ? 'border-purple-600 text-purple-700' : 'border-transparent text-gray-500 hover:text-gray-700')}>
+              tab === t.id ? 'border-mystic-600 text-mystic-700' : 'border-transparent text-gray-500 hover:text-gray-700')}>
             <t.icon size={14} />{t.label}
           </button>
         ))}
@@ -147,7 +147,7 @@ export function CourseEditor({ course, modules: initModules }: { course: any; mo
             <div className="lg:col-span-2 space-y-3">
               <div><label className="text-sm font-medium text-gray-700 block mb-1">Título *</label><input name="title" defaultValue={course.title} required className={inp} /></div>
               <div><label className="text-sm font-medium text-gray-700 block mb-1">Descrição curta</label>
-                <textarea name="short_description" defaultValue={course.short_description || ''} className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white min-h-[70px] resize-none" /></div>
+                <textarea name="short_description" defaultValue={course.short_description || ''} className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-mystic-400 bg-white min-h-[70px] resize-none" /></div>
               <div className="grid grid-cols-2 gap-3">
                 <div><label className="text-sm font-medium text-gray-700 block mb-1">Categoria</label>
                   <select name="category" defaultValue={course.category || ''} className={inp}>
@@ -160,15 +160,15 @@ export function CourseEditor({ course, modules: initModules }: { course: any; mo
             </div>
           </div>
           <div><label className="text-sm font-medium text-gray-700 block mb-1">Descrição completa</label>
-            <textarea name="description" defaultValue={course.description} className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white min-h-[140px] resize-y" /></div>
+            <textarea name="description" defaultValue={course.description} className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-mystic-400 bg-white min-h-[140px] resize-y" /></div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div><label className="text-sm font-medium text-gray-700 block mb-1">O que o aluno aprenderá (1 por linha)</label>
-              <textarea name="what_you_learn" defaultValue={course.what_you_learn?.join('\n') || ''} className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white min-h-[100px] resize-none" /></div>
+              <textarea name="what_you_learn" defaultValue={course.what_you_learn?.join('\n') || ''} className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-mystic-400 bg-white min-h-[100px] resize-none" /></div>
             <div><label className="text-sm font-medium text-gray-700 block mb-1">Requisitos (1 por linha)</label>
-              <textarea name="requirements" defaultValue={course.requirements?.join('\n') || ''} className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white min-h-[100px] resize-none" /></div>
+              <textarea name="requirements" defaultValue={course.requirements?.join('\n') || ''} className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-mystic-400 bg-white min-h-[100px] resize-none" /></div>
           </div>
           <div><label className="text-sm font-medium text-gray-700 block mb-1">Para quem é este curso</label>
-            <textarea name="target_audience" defaultValue={course.target_audience || ''} className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white min-h-[70px] resize-none" /></div>
+            <textarea name="target_audience" defaultValue={course.target_audience || ''} className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-mystic-400 bg-white min-h-[70px] resize-none" /></div>
           <div className="flex justify-end">
             <button type="submit" disabled={saving} className="flex items-center gap-2 px-5 py-2 rounded-lg mystic-gradient text-white text-sm font-medium hover:opacity-90 disabled:opacity-60">
               <Save size={14} />{saving ? 'Salvando...' : 'Salvar'}
@@ -198,7 +198,7 @@ export function CourseEditor({ course, modules: initModules }: { course: any; mo
               <div key={mod.id} className="rounded-xl border bg-white shadow-sm overflow-hidden">
                 <div className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-gray-50 transition-colors"
                   onClick={() => setExpanded(prev => { const n = new Set(prev); open ? n.delete(mod.id) : n.add(mod.id); return n })}>
-                  <div className="w-6 h-6 rounded-md bg-purple-100 text-purple-700 flex items-center justify-center text-xs font-bold shrink-0">{mIdx + 1}</div>
+                  <div className="w-6 h-6 rounded-md bg-mystic-100 text-mystic-700 flex items-center justify-center text-xs font-bold shrink-0">{mIdx + 1}</div>
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-sm truncate">{mod.title}</p>
                     <p className="text-xs text-gray-400">{mod.lessons?.length || 0} aulas</p>
@@ -215,7 +215,7 @@ export function CourseEditor({ course, modules: initModules }: { course: any; mo
                         onSave={(fields: any) => { setModules(prev => prev.map(m => m.id === mod.id ? { ...m, lessons: m.lessons?.map((l: any) => l.id === lesson.id ? { ...l, ...fields } : l) } : m)); updateLesson(lesson.id, course.id, fields) }} />
                     ))}
                     <div className="px-5 py-2.5">
-                      <button onClick={() => addLesson(mod.id)} className="flex items-center gap-1.5 text-xs text-purple-600 hover:text-purple-700 font-medium">
+                      <button onClick={() => addLesson(mod.id)} className="flex items-center gap-1.5 text-xs text-mystic-600 hover:text-mystic-700 font-medium">
                         <Plus size={12} /> Adicionar aula
                       </button>
                     </div>
@@ -268,20 +268,20 @@ function LessonRow({ lesson, index, courseId, onDelete, onVideo, onSave }: any) 
       <div className="flex-1 min-w-0">
         {editing ? (
           <div className="space-y-2">
-            <input value={title} onChange={e => setTitle(e.target.value)} className="w-full text-sm border rounded-lg px-2 py-1 focus:outline-none focus:ring-1 focus:ring-purple-400" autoFocus />
-            <input value={desc} onChange={e => setDesc(e.target.value)} className="w-full text-xs border rounded-lg px-2 py-1 focus:outline-none focus:ring-1 focus:ring-purple-400 text-gray-500" placeholder="Descrição breve (opcional)" />
+            <input value={title} onChange={e => setTitle(e.target.value)} className="w-full text-sm border rounded-lg px-2 py-1 focus:outline-none focus:ring-1 focus:ring-mystic-400" autoFocus />
+            <input value={desc} onChange={e => setDesc(e.target.value)} className="w-full text-xs border rounded-lg px-2 py-1 focus:outline-none focus:ring-1 focus:ring-mystic-400 text-gray-500" placeholder="Descrição breve (opcional)" />
             <label className="flex items-center gap-1.5 text-xs text-gray-500 cursor-pointer">
               <input type="checkbox" checked={preview} onChange={e => setPreview(e.target.checked)} className="rounded" />
               Aula de preview (gratuita)
             </label>
             <div className="flex gap-2">
-              <button onClick={() => { onSave({ title, description: desc, is_preview: preview }); setEditing(false) }} className="text-xs text-purple-600 font-medium hover:underline">Salvar</button>
+              <button onClick={() => { onSave({ title, description: desc, is_preview: preview }); setEditing(false) }} className="text-xs text-mystic-600 font-medium hover:underline">Salvar</button>
               <button onClick={() => setEditing(false)} className="text-xs text-gray-400 hover:underline">Cancelar</button>
             </div>
           </div>
         ) : (
           <button onClick={() => setEditing(true)} className="text-left w-full group">
-            <p className="text-sm font-medium group-hover:text-purple-600 transition-colors truncate">{lesson.title}</p>
+            <p className="text-sm font-medium group-hover:text-mystic-600 transition-colors truncate">{lesson.title}</p>
             {lesson.description && <p className="text-xs text-gray-400 truncate">{lesson.description}</p>}
           </button>
         )}
@@ -291,7 +291,7 @@ function LessonRow({ lesson, index, courseId, onDelete, onVideo, onSave }: any) 
         {lesson.video_url
           ? <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-700">Vídeo ✓</span>
           : <label className={uploading ? 'opacity-50' : 'cursor-pointer'}>
-            <span className="flex items-center gap-1 text-xs text-gray-400 hover:text-purple-600 transition-colors px-2 py-1 rounded hover:bg-purple-50">
+            <span className="flex items-center gap-1 text-xs text-gray-400 hover:text-mystic-600 transition-colors px-2 py-1 rounded hover:bg-mystic-50">
               <Upload size={11} />{uploading ? 'Enviando...' : 'Vídeo'}
             </span>
             <input type="file" accept="video/*" className="sr-only" disabled={uploading} onChange={async e => { const f = e.target.files?.[0]; if (!f) return; setUploading(true); await onVideo(f); setUploading(false) }} />

@@ -46,7 +46,7 @@ export default async function FinancesPage() {
         {[
           { label: 'Receita total', value: formatCurrency(totalRevenue), icon: DollarSign, color: 'bg-emerald-100 text-emerald-700' },
           { label: 'Este mês', value: formatCurrency(monthRevenue), icon: TrendingUp, color: 'bg-blue-100 text-blue-700' },
-          { label: 'Vendas realizadas', value: String(paid.length), icon: ShoppingCart, color: 'bg-purple-100 text-purple-700' },
+          { label: 'Vendas realizadas', value: String(paid.length), icon: ShoppingCart, color: 'bg-mystic-100 text-mystic-700' },
         ].map(c => (
           <div key={c.label} className="rounded-xl border bg-white p-5 shadow-sm">
             <div className={`w-9 h-9 rounded-xl flex items-center justify-center mb-3 ${c.color}`}><c.icon size={18} /></div>

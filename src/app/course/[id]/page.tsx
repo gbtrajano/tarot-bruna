@@ -23,15 +23,15 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ i
   const firstLesson = modules[0]?.lessons?.[0]
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(to bottom, #1a0640, #2e1065, #f9fafb)' }}>
+    <div className="min-h-screen" style={{ background: 'linear-gradient(to bottom, #2d0a0a, #4a1515, #f9fafb)' }}>
       <StudentHeader />
       <section className="pt-20 pb-0">
         <div className="max-w-6xl mx-auto px-4 py-12 grid grid-cols-1 lg:grid-cols-5 gap-8">
           <div className="lg:col-span-3 space-y-4">
             {course.category && <span className="text-xs font-semibold uppercase tracking-widest text-yellow-400">{course.category.replace(/-/g, ' ')}</span>}
             <h1 className="text-3xl md:text-4xl font-display font-bold text-white leading-tight">{course.title}</h1>
-            {course.short_description && <p className="text-purple-200 text-lg">{course.short_description}</p>}
-            <div className="flex items-center gap-4 text-sm text-purple-300">
+            {course.short_description && <p className="text-mystic-200 text-lg">{course.short_description}</p>}
+            <div className="flex items-center gap-4 text-sm text-mystic-300">
               <span className="flex items-center gap-1.5"><BookOpen size={14} />{totalLessons} aulas</span>
               {course.total_duration_minutes > 0 && <span className="flex items-center gap-1.5"><Clock size={14} />{formatDuration(course.total_duration_minutes)}</span>}
             </div>
@@ -76,7 +76,7 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ i
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {course.what_you_learn.map((item: string, i: number) => (
                   <div key={i} className="flex items-start gap-2 text-sm text-gray-600">
-                    <CheckCircle size={14} className="text-purple-500 mt-0.5 shrink-0" />{item}
+                    <CheckCircle size={14} className="text-mystic-500 mt-0.5 shrink-0" />{item}
                   </div>
                 ))}
               </div>
@@ -103,7 +103,7 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ i
                   <div className="border-t divide-y">
                     {(mod.lessons || []).map((lesson: any) => (
                       <div key={lesson.id} className="flex items-center gap-3 px-4 py-3">
-                        <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 ${lesson.is_preview || isEnrolled ? 'bg-purple-100 text-purple-600' : 'bg-gray-100 text-gray-400'}`}>
+                        <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 ${lesson.is_preview || isEnrolled ? 'bg-mystic-100 text-mystic-600' : 'bg-gray-100 text-gray-400'}`}>
                           {lesson.is_preview || isEnrolled ? <Play size={10} fill="currentColor" /> : <Lock size={10} />}
                         </div>
                         <p className="text-sm flex-1 truncate">{lesson.title}</p>

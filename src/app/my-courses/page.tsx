@@ -40,7 +40,7 @@ export default async function MyCoursesPage() {
               if (!c) return null
               return (
                 <div key={e.id} className="rounded-2xl border bg-white overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                  <div className="aspect-video bg-purple-100 overflow-hidden">
+                  <div className="aspect-video bg-mystic-100 overflow-hidden">
                     {c.cover_image_url
                       ? <img src={c.cover_image_url} alt={c.title} className="w-full h-full object-cover" />
                       : <div className="w-full h-full flex items-center justify-center text-4xl">🔮</div>}
@@ -52,7 +52,7 @@ export default async function MyCoursesPage() {
                         <span>Progresso</span><span>{Math.round(e.progress_percent || 0)}%</span>
                       </div>
                       <div className="h-2 rounded-full bg-gray-100 overflow-hidden">
-                        <div className="h-full rounded-full bg-purple-500 transition-all" style={{ width: `${e.progress_percent || 0}%` }} />
+                        <div className="h-full rounded-full bg-mystic-500 transition-all" style={{ width: `${e.progress_percent || 0}%` }} />
                       </div>
                     </div>
                     <div className="flex items-center gap-3 text-xs text-gray-400">

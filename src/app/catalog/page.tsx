@@ -6,7 +6,7 @@ import { Search, Sparkles } from "lucide-react";
 export default async function CatalogPage() {
   const courses = await getPublishedCourses();
   return (
-    <div style={{ minHeight: "100vh", backgroundColor: "#1a0640" }}>
+    <div style={{ minHeight: "100vh", backgroundColor: "#2d0a0a" }}>
       <StudentHeader />
 
       {/* Hero */}
@@ -15,7 +15,7 @@ export default async function CatalogPage() {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse at center, rgba(124,58,237,0.35) 0%, transparent 70%)",
+              "radial-gradient(ellipse at center, rgba(139,64,64,0.35) 0%, transparent 70%)",
           }}
         />
         <div className="relative max-w-3xl mx-auto">
@@ -26,18 +26,17 @@ export default async function CatalogPage() {
             Entre Rosas e Cartas Sua jornada na cartomancia{" "}
             <span className="gold-text">começa aqui.</span>
           </h1>
-          <p className="text-purple-200 text-lg mb-8">
-            Cursos completos do básico ao avançado. Do Tarot tradicional ao
-            terapêutico.
+          <p className="text-mystic-200 text-lg mb-8">
+            Formação completa em Baralho de Esquerda: técnica, prática e interpretação.
           </p>
           <div className="relative max-w-md mx-auto">
             <Search
               size={16}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-purple-400"
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-mystic-400"
             />
             <input
               placeholder="Buscar cursos de tarot..."
-              className="w-full h-12 rounded-xl pl-10 pr-4 text-white placeholder:text-purple-300 focus:outline-none focus:ring-2 focus:ring-yellow-400/50"
+              className="w-full h-12 rounded-xl pl-10 pr-4 text-white placeholder:text-mystic-300 focus:outline-none focus:ring-2 focus:ring-yellow-400/50"
               style={{
                 background: "rgba(255,255,255,0.08)",
                 border: "1px solid rgba(255,255,255,0.15)",
@@ -55,7 +54,7 @@ export default async function CatalogPage() {
               ? `${courses.length} curso${courses.length !== 1 ? "s" : ""} disponíve${courses.length !== 1 ? "is" : "l"}`
               : "Em breve"}
           </h2>
-          <p className="text-purple-300 text-sm mt-0.5">
+          <p className="text-mystic-300 text-sm mt-0.5">
             Encontre o curso ideal para sua jornada
           </p>
         </div>
@@ -63,7 +62,7 @@ export default async function CatalogPage() {
         {courses.length === 0 ? (
           <div className="text-center py-20">
             <div className="text-6xl mb-4">🔮</div>
-            <p className="text-purple-300 text-lg">
+            <p className="text-mystic-300 text-lg">
               Os primeiros cursos chegam em breve...
             </p>
           </div>

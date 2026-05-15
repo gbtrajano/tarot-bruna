@@ -10,7 +10,7 @@ const methods = [
   { id: 'boleto', label: 'Boleto Bancário', desc: 'Vencimento em 3 dias', emoji: '📄', badge: null },
 ]
 
-const inp = 'w-full h-11 rounded-xl border border-gray-200 bg-white px-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all placeholder:text-gray-400'
+const inp = 'w-full h-11 rounded-xl border border-gray-200 bg-white px-3 text-sm focus:outline-none focus:ring-2 focus:ring-mystic-400 focus:border-mystic-400 transition-all placeholder:text-gray-400'
 
 export function CheckoutForm({ course, isFree }: { course: any; isFree: boolean }) {
   const router = useRouter()
@@ -68,7 +68,7 @@ export function CheckoutForm({ course, isFree }: { course: any; isFree: boolean 
       {/* Dados pessoais */}
       <div className="rounded-2xl bg-white p-6 shadow-sm space-y-4">
         <h2 className="font-semibold text-gray-900 flex items-center gap-2">
-          <span className="w-6 h-6 rounded-full bg-purple-600 text-white text-xs flex items-center justify-center font-bold">1</span>
+          <span className="w-6 h-6 rounded-full bg-mystic-600 text-white text-xs flex items-center justify-center font-bold">1</span>
           Seus dados
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -92,12 +92,12 @@ export function CheckoutForm({ course, isFree }: { course: any; isFree: boolean 
           {/* Forma de pagamento */}
           <div className="rounded-2xl bg-white p-6 shadow-sm space-y-4">
             <h2 className="font-semibold text-gray-900 flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-purple-600 text-white text-xs flex items-center justify-center font-bold">2</span>
+              <span className="w-6 h-6 rounded-full bg-mystic-600 text-white text-xs flex items-center justify-center font-bold">2</span>
               Forma de pagamento
             </h2>
             <div className="space-y-2">
               {methods.map(m => (
-                <label key={m.id} className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all ${method === m.id ? 'border-purple-500 bg-purple-50' : 'border-gray-200 hover:border-gray-300'}`}>
+                <label key={m.id} className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all ${method === m.id ? 'border-mystic-500 bg-mystic-50' : 'border-gray-200 hover:border-gray-300'}`}>
                   <input type="radio" name="payment_method" value={m.id} className="sr-only" checked={method === m.id} onChange={() => setMethod(m.id)} />
                   <span className="text-2xl">{m.emoji}</span>
                   <div className="flex-1">
@@ -107,7 +107,7 @@ export function CheckoutForm({ course, isFree }: { course: any; isFree: boolean 
                     </div>
                     <p className="text-xs text-gray-500">{m.desc}</p>
                   </div>
-                  <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${method === m.id ? 'border-purple-500 bg-purple-500' : 'border-gray-300'}`}>
+                  <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${method === m.id ? 'border-mystic-500 bg-mystic-500' : 'border-gray-300'}`}>
                     {method === m.id && <Check size={10} className="text-white" />}
                   </div>
                 </label>
@@ -150,7 +150,7 @@ export function CheckoutForm({ course, isFree }: { course: any; isFree: boolean 
             <h3 className="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2"><Tag size={14} /> Cupom de desconto</h3>
             <div className="flex gap-2">
               <input value={coupon} onChange={e => setCoupon(e.target.value.toUpperCase())} placeholder="SEUCUPOM" className={`${inp} flex-1 uppercase tracking-widest`} />
-              <button type="button" className="px-4 py-2 rounded-xl bg-purple-100 text-purple-700 text-sm font-medium hover:bg-purple-200 transition-colors">Aplicar</button>
+              <button type="button" className="px-4 py-2 rounded-xl bg-mystic-100 text-mystic-700 text-sm font-medium hover:bg-mystic-200 transition-colors">Aplicar</button>
             </div>
           </div>
         </>
